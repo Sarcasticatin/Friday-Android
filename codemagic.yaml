@@ -1,0 +1,20 @@
+workflows:
+  android-workflow:
+    name: Friday Android Build
+    max_build_duration: 60
+    instance_type: mac_mini_m1
+
+    environment:
+      vars:
+        GRADLE_OPTS: "-Dorg.gradle.jvmargs=-Xmx2048m"
+      java: 17
+
+    scripts:
+      - name: Grant execute permission
+        script: chmod +x ./gradlew
+
+      - name: Build APK
+        script: ./gradlew assembleDebug
+
+    artifacts:
+      - app/build/outputs/**/*.apk
